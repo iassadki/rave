@@ -1,68 +1,87 @@
-// import * as React from 'react';
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, FlatList, StyleSheet, Dimensions, StatusBar, SafeAreaView, ScrollView, Pressable } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { SafeAreaView, StyleSheet } from 'react-native';
+import LoginScreen from './screens/LoginScreen.js';
+import ModelScreen from './screens/ModelScreen';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+// import { Provider } from 'react-redux';
+// import store from './redux/store';
+// import { LikedSongsProvider } from './context/LikedSongsContext';
 
-function HomeScreen() {
-  return (
-    <SafeAreaView style={style = styles.container}>
-      <ScrollView >
-        <Text> Songs </Text>
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-function LikedSongsScreen() {
-  return (
-    <View style={style = styles.container}>
-      <Text>Liked Songs</Text>
-    </View>
-  );
-}
-
-function SongScreen() {
-  return (
-    <View style={style = styles.container}>
-      <Text>Song Infos</Text>
-    </View>
-  );
-}
-
+const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
+const LoginScreenNavigator = () => {
+
   return (
     <Tab.Navigator
-      tabBarOptions={{
-        activeTintColor: 'black',
-        inactiveTintColor: 'gray',
+      screenOptions={{
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: 'gray',
+        tabBarStyle: { backgroundColor: '#000', borderTopWidth: 0 },
       }}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Liked Songs" component={LikedSongsScreen} />
+      <Tab.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="login" color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Models"
+        component={ModelScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="magnify" color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
-}
+};
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
+      <SafeAreaView style={styles.safeArea}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="LoginScreen" // Changer le nom de l'écran initial si nécessaire
+            screenOptions={{
+              headerShown: false, // Cacher l'en-tête pour tous les écrans par défaut
+              headerStyle: { backgroundColor: '#fff' },
+              headerTintColor: '#000',
+            }}
+          >
+            <Stack.Screen
+              name="LoginScreen" // Renommer l'écran "Login" en "LoginScreen"
+              component={LoginScreenNavigator}
+            />
+            <Stack.Screen
+              name="ModelScreen"
+              component={ModelScreen}
+              options={{ headerShown: false }} // Cacher l'en-tête pour l'écran ModelScreen
+            />
+          </Stack.Navigator>
+
+        </NavigationContainer>
+      </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
   container: {
     flex: 1,
-    alignItems: 'center',
-    color: 'white',
-    justifyContent: 'center',
+    backgroundColor: '#121212',
   },
-
 });
