@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import LoginScreen from './screens/LoginScreen.js';
 import ModelScreen from './screens/ModelScreen';
+import RecordScreen from './screens/RecordScreen';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import { Provider } from 'react-redux';
 // import store from './redux/store';
@@ -29,6 +30,16 @@ const LoginScreenNavigator = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="login" color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Record"
+        component={RecordScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="microphone" color={color} size={size} />
           ),
           headerShown: false,
         }}
