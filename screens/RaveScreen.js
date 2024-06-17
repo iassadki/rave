@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, Text, StyleSheet } from 'react-native';
 
-export default function ModelScreen({ navigation }) {
+export default function RaveScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
