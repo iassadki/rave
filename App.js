@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import LoginScreen from './screens/LoginScreen.js';
-import ModelScreen from './screens/ModelScreen';
+import RaveScreen from './screens/RaveScreen.js';
 import RecordScreen from './screens/RecordScreen';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 // import { Provider } from 'react-redux';
@@ -45,8 +45,8 @@ const LoginScreenNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Models"
-        component={ModelScreen}
+        name="Rave"
+        component={RaveScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="violin" color={color} size={size} />
@@ -75,9 +75,9 @@ export default function App() {
               component={LoginScreenNavigator}
             />
             <Stack.Screen
-              name="ModelScreen"
-              component={ModelScreen}
-              options={{ headerShown: false }} // Cacher l'en-tête pour l'écran ModelScreen
+              name="RaveScreen"
+              component={RaveScreen}
+              options={{ headerShown: false }} // Cacher l'en-tête pour l'écran RaveScreen
             />
           </Stack.Navigator>
 

@@ -5,7 +5,7 @@ export default function RecordScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                <Text style={styles.pageTitle}>Featured</Text>
+                <Text style={styles.pageTitle}>Recording</Text>
                 {/* Ajoutez ici vos composants */}
             </ScrollView>
         </SafeAreaView>

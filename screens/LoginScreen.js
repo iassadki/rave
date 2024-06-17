@@ -5,7 +5,7 @@ export default function LoginScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                <Text style={styles.pageTitle}>Featured</Text>
+                <Text style={styles.pageTitle}>Login</Text>
                 {/* Ajoutez ici vos composants */}
             </ScrollView>
         </SafeAreaView>

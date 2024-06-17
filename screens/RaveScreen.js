@@ -5,7 +5,7 @@ export default function ModelScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                <Text style={styles.pageTitle}>Featured</Text>
+                <Text style={styles.pageTitle}>Rave</Text>
                 {/* Ajoutez ici vos composants */}
             </ScrollView>
         </SafeAreaView>
