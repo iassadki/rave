@@ -5,17 +5,15 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import LoginScreen from './screens/LoginScreen.js';
 import RaveScreen from './screens/RaveScreen.js';
-import RecordScreen from './screens/RecordScreen';
+import RecordsListScreen from './screens/RecordsListScreen';
+import RecordingScreen from './screens/RecordingScreen';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-// import { Provider } from 'react-redux';
-// import store from './redux/store';
-// import { LikedSongsProvider } from './context/LikedSongsContext';
+import { RecordingProvider } from './context/RecordingContext';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const LoginScreenNavigator = () => {
-
   return (
     <Tab.Navigator
       screenOptions={{
@@ -25,18 +23,8 @@ const LoginScreenNavigator = () => {
       }}
     >
       <Tab.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="login" color={color} size={size} />
-          ),
-          headerShown: false,
-        }}
-      />
-      <Tab.Screen
-        name="Record"
-        component={RecordScreen}
+        name="Recording"
+        component={RecordingScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="microphone" color={color} size={size} />
@@ -45,7 +33,7 @@ const LoginScreenNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Rave"
+        name="Rave Steps"
         component={RaveScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -60,29 +48,30 @@ const LoginScreenNavigator = () => {
 
 export default function App() {
   return (
+    <RecordingProvider>
       <SafeAreaView style={styles.safeArea}>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="LoginScreen" // Changer le nom de l'écran initial si nécessaire
+            initialRouteName="LoginScreen"
             screenOptions={{
-              headerShown: false, // Cacher l'en-tête pour tous les écrans par défaut
+              headerShown: false,
               headerStyle: { backgroundColor: '#fff' },
               headerTintColor: '#000',
             }}
           >
             <Stack.Screen
-              name="LoginScreen" // Renommer l'écran "Login" en "LoginScreen"
+              name="LoginScreen"
               component={LoginScreenNavigator}
             />
             <Stack.Screen
               name="RaveScreen"
               component={RaveScreen}
-              options={{ headerShown: false }} // Cacher l'en-tête pour l'écran RaveScreen
+              options={{ headerShown: false }}
             />
           </Stack.Navigator>
-
         </NavigationContainer>
       </SafeAreaView>
+    </RecordingProvider>
   );
 }
 

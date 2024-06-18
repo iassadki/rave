@@ -1,11 +1,11 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, Text, StyleSheet } from 'react-native';
 
-export default function RecordScreen({ navigation }) {
+export default function SuccessScreen({ navigation }) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                <Text style={styles.pageTitle}>Recording</Text>
+                <Text style={styles.pageTitle}>SuccessScreen</Text>
                 {/* Ajoutez ici vos composants */}
             </ScrollView>
         </SafeAreaView>
