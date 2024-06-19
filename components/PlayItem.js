@@ -2,11 +2,11 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-export default function PlayItem({ title, onPress }) {
+export default function PlayItem({ recordTitle, onPress }) {
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
             <FontAwesome name="microphone" size={25} color="white" />
-            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.recordTitle}>{recordTitle}</Text>
         </TouchableOpacity>
     );
 };
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 15,
     },
-    title: {
+    recordTitle: {
         marginLeft: 10,
         fontSize: 18,
         color: 'white',

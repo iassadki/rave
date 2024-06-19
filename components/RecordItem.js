@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-export default function RecordItem({ record }) {
+const RecordItem = ({ record }) => {
     return (
         <TouchableOpacity style={styles.record}>
             <View style={styles.recordItem}>
                 <Image style={styles.image} source={require('../assets/microphone.png')} />
-                <Text style={styles.recordTitle}>{record.uri}</Text>
+                <Text style={styles.recordTitle}>{record.name}</Text>
                 <View style={styles.recordButtonsGrid}>
                     <TouchableOpacity style={styles.button}>
                         <FontAwesome name="play" size={24} color="white" />
@@ -19,7 +19,7 @@ export default function RecordItem({ record }) {
             </View>
         </TouchableOpacity>
     );
-}
+};
 
 const styles = StyleSheet.create({
     record: {
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 10,
         fontWeight: '500',
-        color: '#B9B9B9',
+        color: '#FFFFFF',
     },
     recordButtonsGrid: {
         flexDirection: 'row',
@@ -60,3 +60,5 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
 });
+
+export default RecordItem;

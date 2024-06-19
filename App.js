@@ -13,7 +13,7 @@ import { RecordingProvider } from './context/RecordingContext';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const LoginScreenNavigator = () => {
+const MainTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -42,30 +42,29 @@ const LoginScreenNavigator = () => {
           headerShown: false,
         }}
       />
+      <Tab.Screen
+        name="Records List"
+        component={RecordsListScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="playlist-music" color={color} size={size} />
+          ),
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 };
 
-export default function App() {
+const App = () => {
   return (
     <RecordingProvider>
       <SafeAreaView style={styles.safeArea}>
         <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="LoginScreen"
-            screenOptions={{
-              headerShown: false,
-              headerStyle: { backgroundColor: '#fff' },
-              headerTintColor: '#000',
-            }}
-          >
+          <Stack.Navigator>
             <Stack.Screen
-              name="LoginScreen"
-              component={LoginScreenNavigator}
-            />
-            <Stack.Screen
-              name="RaveScreen"
-              component={RaveScreen}
+              name="Main"
+              component={MainTabs}
               options={{ headerShown: false }}
             />
           </Stack.Navigator>
@@ -85,3 +84,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#121212',
   },
 });
+
+export default App;

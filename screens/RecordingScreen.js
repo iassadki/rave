@@ -1,14 +1,14 @@
 import React, { useState, useContext } from 'react';
-import { Button, View, StyleSheet, Text } from 'react-native';
+import { Text, StyleSheet, SafeAreaView } from 'react-native';
 import { Audio } from 'expo-av';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { RecordingContext } from '../context/RecordingContext';
 import InputItem from '../components/InputItem';
-import PlayItem from '../components/PlayItem';
+import RecordingItem from '../components/RecordingItem';
 
 export default function RecordingScreen() {
   const { addRecording } = useContext(RecordingContext);
   const [recording, setRecording] = useState(null);
+  const [recordTitle, setRecordTitle] = useState('');
 
   const startRecording = async () => {
     try {
@@ -35,8 +35,9 @@ export default function RecordingScreen() {
     try {
       await recording.stopAndUnloadAsync();
       const uri = recording.getURI();
-      addRecording({ id: Date.now(), uri });
-      setRecording(null); // Remettre à null l'état d'enregistrement après l'arrêt
+      addRecording({ name: recordTitle, uri });
+      setRecording(null);
+      setRecordTitle('');
     } catch (err) {
       console.error('Failed to stop recording', err);
     }
@@ -45,13 +46,14 @@ export default function RecordingScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.pageTitle}>Recording</Text>
-      <InputItem />
 
-      <PlayItem
-        title={recording ? 'Stop Recording' : 'Start Recording'}
-        onPress={recording ? stopRecording : startRecording}
+      <InputItem recordTitle={recordTitle} setRecordTitle={setRecordTitle} />
+
+      <RecordingItem
+        startRecording={startRecording}
+        stopRecording={stopRecording}
+        isRecording={!!recording}
       />
-
     </SafeAreaView>
   );
 }
