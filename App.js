@@ -42,16 +42,6 @@ const MainTabs = () => {
           headerShown: false,
         }}
       />
-      <Tab.Screen
-        name="Records List"
-        component={RecordsListScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="playlist-music" color={color} size={size} />
-          ),
-          headerShown: false,
-        }}
-      />
     </Tab.Navigator>
   );
 };

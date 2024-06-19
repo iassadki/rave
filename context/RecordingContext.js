@@ -1,4 +1,3 @@
-// RecordingContext.js
 import React, { createContext, useState } from 'react';
 
 export const RecordingContext = createContext();
@@ -10,8 +9,12 @@ export const RecordingProvider = ({ children }) => {
         setRecordings([...recordings, { ...record, id: Date.now().toString() }]);
     };
 
+    const deleteRecording = (id) => {
+        setRecordings(recordings.filter(record => record.id !== id));
+    };
+
     return (
-        <RecordingContext.Provider value={{ recordings, addRecording }}>
+        <RecordingContext.Provider value={{ recordings, addRecording, deleteRecording }}>
             {children}
         </RecordingContext.Provider>
     );

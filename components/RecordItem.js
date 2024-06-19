@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
-const RecordItem = ({ record }) => {
+const RecordItem = ({ record, deleteRecording }) => {
     return (
         <TouchableOpacity style={styles.record}>
             <View style={styles.recordItem}>
@@ -12,7 +12,7 @@ const RecordItem = ({ record }) => {
                     <TouchableOpacity style={styles.button}>
                         <FontAwesome name="play" size={24} color="white" />
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => deleteRecording(record.id)}>
                         <FontAwesome name="trash" size={24} color="white" />
                     </TouchableOpacity>
                 </View>
