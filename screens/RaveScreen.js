@@ -4,7 +4,7 @@ import RecordItem from '../components/RecordItem';
 import { RecordingContext } from '../context/RecordingContext';
 
 export default function RaveScreen({ navigation }) {
-    const { recordings, deleteRecording } = useContext(RecordingContext);
+    const { recordings, playRecording, pauseRecording, deleteRecording } = useContext(RecordingContext);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -13,7 +13,13 @@ export default function RaveScreen({ navigation }) {
                 <Text style={styles.stepTitle}>Step 1 : Choose the audio</Text>
                 <View>
                     {recordings.map(record => (
-                        <RecordItem key={record.id} record={record} deleteRecording={deleteRecording} />
+                        <RecordItem
+                            key={record.id}
+                            record={record}
+                            playRecording={playRecording}
+                            pauseRecording={pauseRecording}
+                            deleteRecording={deleteRecording}
+                        />
                     ))}
                 </View>
                 <Text style={styles.stepTitle}>Step 2 : Instrument model selection</Text>

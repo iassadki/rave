@@ -1,16 +1,34 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import { CheckBox } from 'react-native-elements';
 
-const RecordItem = ({ record, deleteRecording }) => {
+const RecordItem = ({ record, playRecording, pauseRecording, deleteRecording }) => {
+    const [checked, setChecked] = useState(false);
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    const handlePlayPause = async () => {
+        if (isPlaying) {
+            await pauseRecording();
+        } else {
+            await playRecording(record.uri);
+        }
+        setIsPlaying(!isPlaying);
+    };
+
     return (
         <TouchableOpacity style={styles.record}>
             <View style={styles.recordItem}>
-                <Image style={styles.image} source={require('../assets/microphone.png')} />
+                <CheckBox
+                    checked={checked}
+                    onPress={() => setChecked(!checked)}
+                    checkedColor="white"
+                    uncheckedColor="white"
+                />
                 <Text style={styles.recordTitle}>{record.name}</Text>
                 <View style={styles.recordButtonsGrid}>
-                    <TouchableOpacity style={styles.button}>
-                        <FontAwesome name="play" size={24} color="white" />
+                    <TouchableOpacity style={styles.button} onPress={handlePlayPause}>
+                        <FontAwesome name={isPlaying ? "pause" : "play"} size={24} color="white" />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => deleteRecording(record.id)}>
                         <FontAwesome name="trash" size={24} color="white" />
@@ -29,12 +47,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#424242',
         marginVertical: 5,
-        borderRadius: 5,
-    },
-    image: {
-        width: 30,
-        height: 30,
-        margin: 15,
         borderRadius: 5,
     },
     recordTitle: {
