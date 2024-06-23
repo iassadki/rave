@@ -5,8 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
 import RaveScreen from './screens/RaveScreen';
-import RecordingScreen from './screens/RecordingScreen';
 import RecordsListScreen from './screens/RecordsListScreen';
+import RecordingScreen from './screens/RecordingScreen';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { RecordingProvider } from './context/RecordingContext';
 
@@ -22,16 +22,6 @@ const MainTabs = () => {
         tabBarStyle: { backgroundColor: '#000', borderTopWidth: 0 },
       }}
     >
-      <Tab.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="server" color={color} size={size} />
-          ),
-          headerShown: false,
-        }}
-      />
       <Tab.Screen
         name="Recording"
         component={RecordingScreen}
@@ -61,13 +51,17 @@ const App = () => {
     <RecordingProvider>
       <SafeAreaView style={styles.safeArea}>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+              options={{ headerShown: false }}
+            />
             <Stack.Screen
               name="Main"
               component={MainTabs}
               options={{ headerShown: false }}
             />
-            {/* Additional stack screens can be added here if needed */}
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>
