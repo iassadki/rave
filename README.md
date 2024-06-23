@@ -32,4 +32,5 @@ npx expo start
 ```
 
 ##### OR
+
 1. Scan this QR-Code with the Expo Go app, in this link : [Expo Go](https://expo.dev/@iassadki/rave)
