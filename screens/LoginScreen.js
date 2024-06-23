@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView, Text, StyleSheet, TextInput, Button, View } from 'react-native';
+import { Snackbar } from 'react-native-paper';
 
-export default function LoginScreen({ navigation }) {
-    const [ipAddress, setIpAddress] = React.useState('');
-    const [port, setPort] = React.useState('');
+const LoginScreen = ({ navigation }) => {
+    const [ipAddress, setIpAddress] = useState('192.168.1.48'); // Adresse IP du serveur
+    const [port, setPort] = useState('8000'); // Port du serveur
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+
+    const handleLogin = async () => {
+        try {
+            const response = await fetch(`http://${ipAddress}:${port}/`);
+            if (response.ok) {
+                setSnackbarMessage('Connexion réussie');
+                setSnackbarVisible(true);
+                navigation.navigate('Main', { screen: 'Recording' });
+            } else {
+                setSnackbarMessage('Identifiants incorrects');
+                setSnackbarVisible(true);
+            }
+        } catch (error) {
+            console.error('Erreur lors de la connexion au serveur:', error);
+            setSnackbarMessage('Erreur de connexion au serveur');
+            setSnackbarVisible(true);
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
@@ -14,7 +35,7 @@ export default function LoginScreen({ navigation }) {
                     placeholder="Adresse IP"
                     value={ipAddress}
                     onChangeText={setIpAddress}
-                    keyboardType="default"
+                    keyboardType="numeric"
                     placeholderTextColor="black"
                 />
                 <TextInput
@@ -28,11 +49,19 @@ export default function LoginScreen({ navigation }) {
             </View>
             <Button
                 title="Se connecter"
-                onPress={() => { navigation.navigate('Main', { screen: 'Recording' }) }}
+                onPress={handleLogin}
             />
+            <Snackbar
+                visible={snackbarVisible}
+                onDismiss={() => setSnackbarVisible(false)}
+                duration={Snackbar.DURATION_SHORT}
+                style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}
+            >
+                {snackbarMessage}
+            </Snackbar>
         </SafeAreaView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -66,3 +95,5 @@ const styles = StyleSheet.create({
         color: 'black',
     },
 });
+
+export default LoginScreen;
