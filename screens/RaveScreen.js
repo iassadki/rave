@@ -1,29 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, Text, StyleSheet, View, FlatList, Button } from 'react-native';
+import { SafeAreaView, ScrollView, Text, StyleSheet, View, FlatList, Button, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import RecordItem from '../components/RecordItem';
 import { deleteRecording as deleteRecordingAction, playRecording } from '../slices/recordingsSlice';
 import * as FileSystem from 'expo-file-system';
 
 export default function RaveScreen({ navigation }) {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); 
     const recordings = useSelector((state) => state.recordings.recordings);
     const [models, setModels] = useState([]);
     const [isDownloading, setIsDownloading] = useState(false);
 
+    // Afficher les modeles
     useEffect(() => {
         fetchModels();
     }, []);
 
+    // Supprimer un enregistrement
     const handleDeleteRecording = async (recordName) => {
         try {
+            // Supprimer le fichier audio
             await FileSystem.deleteAsync(`${FileSystem.documentDirectory}recordings/${recordName}.m4a`);
-            dispatch(deleteRecordingAction(recordName));
+            dispatch(deleteRecordingAction(recordName)); // Supprimer l'enregistrement du store
         } catch (error) {
             console.error('Error deleting recording:', error);
         }
     };
 
+    // Récuperer les modeles
     const fetchModels = async () => {
         try {
             const response = await fetch(`http://192.168.1.48:8000/getmodels`);
@@ -38,10 +42,26 @@ export default function RaveScreen({ navigation }) {
         }
     };
 
+    // Télécharger un modele
     const downloadModel = async (modelName) => {
         setIsDownloading(true);
-        // Implémentez la logique pour télécharger le modèle ici
-        setIsDownloading(false);
+        try {
+            // creer un telechargement 
+            const downloadResumable = FileSystem.createDownloadResumable(
+                `http://192.168.1.48:8000/download?model=${modelName}`,
+                `${FileSystem.documentDirectory}${modelName}.model`
+            );
+
+            // telecharger le modele
+            const { uri } = await downloadResumable.downloadAsync();
+            Alert.alert('Download complete', `Model downloaded to ${uri}`);
+        } catch (error) {
+            console.error('Error downloading model:', error);
+            Alert.alert('Download failed', 'Failed to download model');
+        } finally {
+            // fin du telechargement
+            setIsDownloading(false);
+        }
     };
 
     return (
@@ -49,6 +69,7 @@ export default function RaveScreen({ navigation }) {
             <ScrollView>
                 <Text style={styles.pageTitle}>Rave steps</Text>
                 <Text style={styles.stepTitle}>Étape 1 : Choisissez l'audio</Text>
+                {/* Affichage des i */}
                 <FlatList
                     data={recordings}
                     keyExtractor={(item) => item.name}

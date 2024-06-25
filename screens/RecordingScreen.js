@@ -9,8 +9,7 @@ import RecordingItem from '../components/RecordingItem';
 import { addRecording } from '../slices/recordingsSlice'; // NEW
 
 export default function RecordingScreen() {
-  // const {addRecording} = useContext(RecordingContext); // OLD
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); // Dispatch pour ajouter l'enregistrement à la liste
   const [recording, setRecording] = useState(null);
   const [recordTitle, setRecordTitle] = useState('');
   const [isRecording, setIsRecording] = useState(false);
@@ -18,28 +17,24 @@ export default function RecordingScreen() {
   const record = useSelector((state) => state.recordings.recordings);
 
   // afficher tout les fichiers avec console.log, afficher que les noms
-  console.log("record.name : ", record);
-  console.log("record.name : ", record[0].name);
-  console.log("record.name : ", record.name);
 
   const startRecording = async () => {
-    // Condition si l'utilisateur a ou non ecrit un nom pour l'enregistrement
-    // if (!recordTitle.trim()) {
-    //   Alert.alert('Please enter a title for the recording!');
-    //   return;
-    // }
     try {
+      // Demander l'autorisation d'accès au microphone
       const permission = await Audio.requestPermissionsAsync();
+
       // Vérification de l'autorisation d'accès au microphone
       if (permission.status === 'granted') {
         await Audio.setAudioModeAsync({
           allowsRecordingIOS: true,
           playsInSilentModeIOS: true,
         });
+
         // Début de l'enregistrement
         const { recording } = await Audio.Recording.createAsync(
           Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
         );
+        
         setRecording(recording);
         setIsRecording(true);
         await recording.startAsync(); // Démarrer l'enregistrement
@@ -82,7 +77,6 @@ export default function RecordingScreen() {
     }
     setRecording(null); // Réinitialiser l'état de l'enregistrement
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
