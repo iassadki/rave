@@ -14,7 +14,7 @@ export default function DefaultSongScreen({ navigation }) {
                 <View>
                     {recordings.map(record => (
                         <RecordItem
-                            key={record.id}
+                            key={record.name}
                             record={record}
                             playRecording={playRecording}
                             pauseRecording={pauseRecording}

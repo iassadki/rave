@@ -14,7 +14,7 @@ export default function PhoneSongScreen({ navigation }) {
                 <View>
                     {recordings.map(record => (
                         <RecordItem
-                            key={record.id}
+                            key={record.name}
                             record={record}
                             playRecording={playRecording}
                             pauseRecording={pauseRecording}

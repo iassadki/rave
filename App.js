@@ -5,10 +5,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
 import RaveScreen from './screens/RaveScreen';
-import RecordsListScreen from './screens/RecordsListScreen';
 import RecordingScreen from './screens/RecordingScreen';
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { RecordingProvider } from './context/RecordingContext';
+import { Provider } from 'react-redux';
+import { persistor, store } from './store';
+import { PersistGate } from 'redux-persist/integration/react';
+// import { RecordingProvider } from './context/RecordingContext';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -48,24 +50,26 @@ const MainTabs = () => {
 
 const App = () => {
   return (
-    <RecordingProvider>
-      <SafeAreaView style={styles.safeArea}>
-        <NavigationContainer>
-          <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen
-              name="Login"
-              component={LoginScreen}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="Main"
-              component={MainTabs}
-              options={{ headerShown: false }}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </SafeAreaView>
-    </RecordingProvider>
+    <Provider store={store}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
+        <SafeAreaView style={styles.safeArea}>
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Login">
+              <Stack.Screen
+                name="Login"
+                component={LoginScreen}
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="Main"
+                component={MainTabs}
+                options={{ headerShown: false }}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </SafeAreaView>
+      {/* </PersistGate> */}
+    </Provider>
   );
 }
 

@@ -2,6 +2,10 @@ import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 
 const InputItem = ({ recordTitle, setRecordTitle }) => {
+
+    // console.log le titre du record
+    console.log(recordTitle);
+
     return (
         <View style={styles.container}>
             <View style={styles.searchBar}>
